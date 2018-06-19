@@ -34,6 +34,14 @@ new Vue({
     maiorPrioridade: function () {
       this.tarefas.sort((a, b) => { return b.prioridade - a.prioridade })
       this.fifo(false)
+    },
+    rodarTodos: function () {
+      this.fifo(true)
+      console.log(`${this.tempoTotal} - ${this.media}`)
+      this.menorPrimeiro()
+      console.log(`${this.tempoTotal} - ${this.media}`)
+      this.maiorPrioridade()
+      console.log(`${this.tempoTotal} - ${this.media}`)
     }
   }
 })

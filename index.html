@@ -10,6 +10,7 @@
       <button @click="fifo(true)">FIFO</button>
       <button @click="menorPrimeiro">Menor Primeiro</button>
       <button @click="maiorPrioridade">Maior Prioridade</button>
+      <button @click="rodarTodos">Rodar Todos</button>
       <ul>
         <li v-for="tarefa in tarefas" :key="tarefa.id">
           Nome: {{ tarefa.nome }} - Prioridade: {{ tarefa.prioridade }} - Tempo: {{ tarefa.tempo }} - Resultado: {{ tarefa.resultado }}
