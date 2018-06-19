@@ -7,7 +7,9 @@
   </head>
   <body>
     <div id="app">
-      <button @click="fifo">FIFO</button>
+      <button @click="fifo(true)">FIFO</button>
+      <button @click="menorPrimeiro">Menor Primeiro</button>
+      <button @click="maiorPrioridade">Maior Prioridade</button>
       <ul>
         <li v-for="tarefa in tarefas" :key="tarefa.id">
           Nome: {{ tarefa.nome }} - Prioridade: {{ tarefa.prioridade }} - Tempo: {{ tarefa.tempo }} - Resultado: {{ tarefa.resultado }}
