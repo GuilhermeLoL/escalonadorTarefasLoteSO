@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Escalonador Tarefas em Lote</title>
+  </head>
+  <body>
+    <div id="app">
+      <button @click="fifo">FIFO</button>
+      <ul>
+        <li v-for="tarefa in tarefas" :key="tarefa.id">
+          Nome: {{ tarefa.nome }} - Prioridade: {{ tarefa.prioridade }} - Tempo: {{ tarefa.tempo }} - Resultado: {{ tarefa.resultado }}
+        </li>
+      </ul>
+      <span>Total: {{ tempoTotal }} - Média: {{ media }}</span>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
