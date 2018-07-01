@@ -62,14 +62,16 @@ new Vue({
       this.atualizarTempoTotal(tempoTotal)
     },
     rodarTodos: function () {
+      let resultados = []
       this.fifo(true)
-      console.log(`${this.tempoTotal} - ${this.media}`)
+      resultados.push({ metodo: 'FIFO', tempoTotal: this.tempoTotal, media: this.media })
       this.menorPrimeiro()
-      console.log(`${this.tempoTotal} - ${this.media}`)
+      resultados.push({ metodo: 'MENOR', tempoTotal: this.tempoTotal, media: this.media })
       this.maiorPrioridade()
-      console.log(`${this.tempoTotal} - ${this.media}`)
+      resultados.push({ metodo: 'PRIORIDADE', tempoTotal: this.tempoTotal, media: this.media })
       this.circular()
-      console.log(`${this.tempoTotal} - ${this.media}`)
+      resultados.push({ metodo: 'CIRCULAR', tempoTotal: this.tempoTotal, media: this.media })
+      resultados.forEach(e => console.log(`${e.metodo} - ${e.tempoTotal} - ${e.media}`))
     }
   }
 })
