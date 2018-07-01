@@ -10,6 +10,7 @@
       <button @click="fifo(true)">FIFO</button>
       <button @click="menorPrimeiro">Menor Primeiro</button>
       <button @click="maiorPrioridade">Maior Prioridade</button>
+      <button @click="circular">Circular</button>
       <button @click="rodarTodos">Rodar Todos</button>
       <ul>
         <li v-for="tarefa in tarefas" :key="tarefa.id">
@@ -18,7 +19,7 @@
       </ul>
       <span>Total: {{ tempoTotal }} - Média: {{ media }}</span>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="vue.js"></script>
     <script src="app.js"></script>
   </body>
 </html>
