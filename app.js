@@ -1,19 +1,25 @@
 new Vue({
   el: '#app',
   data: {
-    tempoTotal: 0,
-    media: 0,
-    tarefas: [
-      {id: 1, nome: 'A', tempo: 10, prioridade: 4, resultado: 0},
-      {id: 2, nome: 'B', tempo: 5, prioridade: 5, resultado: 0},
-      {id: 3, nome: 'C', tempo: 2, prioridade: 2, resultado: 0}
-    ]
+    nome: '',
+    prioridade: 1,
+    tempo: 1,
+    tarefas: [],
+    resultados: []
   },
   methods: {
-    atualizarTempoTotal: function (total) {
-      this.tempoTotal = total
-      this.media = total / this.tarefas.length
-      this.media = this.media.toFixed(2)
+    add: function () {
+      let id = this.tarefas.length + 1
+      let prioridade = Number(this.prioridade)
+      let tempo = Number(this.tempo)
+      this.tarefas.push({ id: id, nome: this.nome, tempo: tempo, prioridade: prioridade, resultado: 0 })
+      this.nome = ''
+      this.prioridade = this.tempo = 1
+    },
+    atualizarTempoTotal: function (metodo, total) {
+      let media = total / this.tarefas.length
+      media = media.toFixed(2)
+      this.resultados.push({ metodo: metodo, tempoTotal: total, media: media })
     },
     reiniciarLista: function () {
       this.tarefas.sort((a, b) => { return a.id - b.id })
@@ -28,17 +34,20 @@ new Vue({
         e.resultado = tempo
         total += tempo
       })
-      this.atualizarTempoTotal(total)
+      if (reorder) this.atualizarTempoTotal('FIFO', total)
+      else return total
     },
     menorPrimeiro: function () {
       this.reiniciarLista()
       this.tarefas.sort((a, b) => { return a.tempo - b.tempo })
-      this.fifo(false)
+      let total = this.fifo(false)
+      this.atualizarTempoTotal('MENOR', total)
     },
     maiorPrioridade: function () {
       this.reiniciarLista()
       this.tarefas.sort((a, b) => { return b.prioridade - a.prioridade })
-      this.fifo(false)
+      let total = this.fifo(false)
+      this.atualizarTempoTotal('PRIORIDADE', total)
     },
     circular: function () {
       this.reiniciarLista()
@@ -59,19 +68,15 @@ new Vue({
         filaExecucao = filaExecucao.filter(e => {return !e.delete})
       }
       this.tarefas.forEach(e => tempoTotal += e.resultado)
-      this.atualizarTempoTotal(tempoTotal)
+      this.atualizarTempoTotal('CIRCULAR', tempoTotal)
     },
     rodarTodos: function () {
-      let resultados = []
+      this.resultados = []
       this.fifo(true)
-      resultados.push({ metodo: 'FIFO', tempoTotal: this.tempoTotal, media: this.media })
       this.menorPrimeiro()
-      resultados.push({ metodo: 'MENOR', tempoTotal: this.tempoTotal, media: this.media })
       this.maiorPrioridade()
-      resultados.push({ metodo: 'PRIORIDADE', tempoTotal: this.tempoTotal, media: this.media })
       this.circular()
-      resultados.push({ metodo: 'CIRCULAR', tempoTotal: this.tempoTotal, media: this.media })
-      resultados.forEach(e => console.log(`${e.metodo} - ${e.tempoTotal} - ${e.media}`))
+      this.resultados.sort((a, b) => { return a.media - b.media })
     }
   }
 })

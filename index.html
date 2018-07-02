@@ -4,6 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Escalonador Tarefas em Lote</title>
+    <style>
+      table {
+        border-collapse: collapse;
+        border-spacing: 0;
+        width: 100%;
+        border: 1px solid #DDD;
+      }
+      th, td {
+        text-align: left;
+        padding: 16px;
+      }
+      tr:nth-child(even) {
+        background-color: #F2F2F2;
+      }
+      h3 {
+        text-align: center;
+      }
+    </style>
   </head>
   <body>
     <div id="app">
@@ -12,12 +30,46 @@
       <button @click="maiorPrioridade">Maior Prioridade</button>
       <button @click="circular">Circular</button>
       <button @click="rodarTodos">Rodar Todos</button>
-      <ul>
-        <li v-for="tarefa in tarefas" :key="tarefa.id">
-          Nome: {{ tarefa.nome }} - Prioridade: {{ tarefa.prioridade }} - Tempo: {{ tarefa.tempo }} - Resultado: {{ tarefa.resultado }}
-        </li>
-      </ul>
-      <span>Total: {{ tempoTotal }} - Média: {{ media }}</span>
+      <h3>Adicionar Tarefas</h3>
+      <label for="nome">Nome</label>
+      <input id="nome" type="text" v-model="nome">
+      <label for="prioridade">Prioridade (1-5)</label>
+      <input id="prioridade" type="number" v-model="prioridade" :min=1 :max=5>
+      <label for="tempo">Tempo</label>
+      <input id="tempo" type="number" v-model="tempo" :min=1>
+      <button @click="add">Adicionar</button>
+      <h3 v-if="tarefas.length !== 0">Tarefas</h3>
+      <table v-if="tarefas.length !== 0">
+        <thead>
+          <th>Nome</th>
+          <th>Prioridade</th>
+          <th>Tempo</th>
+          <th>Resultado</th>
+        </thead>
+        <tbody>
+          <tr v-for="tarefa in tarefas" :key="tarefa.id">
+            <td>{{ tarefa.nome }}</td>
+            <td>{{ tarefa.prioridade }}</td>
+            <td>{{ tarefa.tempo }}</td>
+            <td>{{ tarefa.resultado }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <h3 v-if="resultados.length !== 0">Resultados</h3>
+      <table v-if="resultados.length !== 0">
+        <thead>
+          <th>Método</th>
+          <th>Tempo Total</th>
+          <th>Média</th>
+        </thead>
+        <tbody>
+          <tr v-for="resultado in resultados" :key="resultado.metodo">
+            <td>{{ resultado.metodo }}</td>
+            <td>{{ resultado.tempoTotal }}</td>
+            <td>{{ resultado.media }}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
     <script src="vue.js"></script>
     <script src="app.js"></script>
